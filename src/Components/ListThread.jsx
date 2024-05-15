@@ -36,7 +36,6 @@ const ListThread = ({ data, onUpVote, onDownVote }) => {
                 {parser(truncateText(thread.body, 200))}
               </div>
               <footer className="flex flex-row items-center gap-1">
-                {/* {console.log(thread)} */}
                 <VoteThread
                   thread={thread}
                   onUpVote={onUpVote}

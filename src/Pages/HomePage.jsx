@@ -24,7 +24,6 @@ const HomePage = () => {
 
       if (!threadResponse.error && !userResponse.error) {
         const users = userResponse.data.users;
-        console.log(users);
 
         const updatedThreads = threadResponse.data.threads.map((thread) => {
           const user = users.find((user) => user.id === thread.ownerId);

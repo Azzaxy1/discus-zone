@@ -73,7 +73,6 @@ const Comments = ({ comments, onUpVote, onDownVote }) => {
             </header>
             <div>{parser(comment.content)}</div>
             <footer className="flex flex-row items-center gap-1">
-              {console.log(comment)}
               <VoteComment
                 comment={comment}
                 onUpVote={onUpVote}
