@@ -29,11 +29,64 @@ const DetailThread = () => {
   }, [id]);
 
   const handleUpVoteComment = async (commentId) => {
-    await upVoteComment(thread.detailThread.id, commentId);
-  };
+    const { error, data } = await upVoteComment(
+      thread.detailThread.id,
+      commentId
+    );
+    console.log(data);
+    console.log(thread);
+    if (!error) {
+      const updatedComments = thread.detailThread.comments.map((comment) => {
+        if (comment.id === commentId) {
+          return {
+            ...comment,
+            upVotesBy:
+              data.vote.voteType === 1
+                ? [...comment.upVotesBy, data.vote.userId]
+                : comment.upVotesBy.filter((id) => id !== data.vote.userId),
+          };
+        }
+        return comment;
+      });
+      console.log(updatedComments);
 
+      setThread({
+        ...thread,
+        detailThread: {
+          ...thread.detailThread,
+          comments: updatedComments,
+        },
+      });
+    }
+  };
   const handleDownVoteComment = async (commentId) => {
-    await downVoteComment(thread.detailThread.id, commentId);
+    const { error, data } = await downVoteComment(
+      thread.detailThread.id,
+      commentId
+    );
+    console.log(data);
+    if (!error) {
+      const updatedComments = thread.detailThread.comments.map((comment) => {
+        if (comment.id === commentId) {
+          return {
+            ...comment,
+            downVotesBy:
+              data.vote.voteType === -1
+                ? [...comment.downVotesBy, data.vote.userId]
+                : comment.downVotesBy.filter((id) => id !== data.vote.userId),
+          };
+        }
+        return comment;
+      });
+
+      setThread({
+        ...thread,
+        detailThread: {
+          ...thread.detailThread,
+          comments: updatedComments,
+        },
+      });
+    }
   };
 
   if (isLoading) {

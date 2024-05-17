@@ -1,20 +1,41 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
-import { BiDislike, BiLike } from "react-icons/bi";
+import React, { useState } from "react";
+import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from "react-icons/bi";
 import PropTypes from "prop-types";
 
 const VoteComment = ({ comment, onUpVote, onDownVote }) => {
+  const [isUpVoted, setIsUpVoted] = useState(false);
+  const [isDownVoted, setIsDownVoted] = useState(false);
+
+  const handleUpVote = () => {
+    onUpVote(comment.id);
+    setIsUpVoted((prev) => !prev);
+  };
+
+  const handleDownVote = () => {
+    onDownVote(comment.id);
+    setIsDownVoted((prev) => !prev);
+  };
+
   return (
     <section className="flex">
       <div className="flex flex-row items-center gap-[2px] me-2">
-        <button type="button" onClick={() => onUpVote(comment.id)}>
-          <BiLike className="text-xl" />
+        <button type="button" onClick={handleUpVote}>
+          {isUpVoted ? (
+            <BiSolidLike className="text-xl" />
+          ) : (
+            <BiLike className="text-xl" />
+          )}
         </button>
         <span>{comment.upVotesBy.length}</span>
       </div>
       <div className="flex flex-row items-center gap-[2px] me-2">
-        <button type="button" onClick={() => onDownVote(comment.id)}>
-          <BiDislike className="text-xl" />
+        <button type="button" onClick={handleDownVote}>
+          {isDownVoted ? (
+            <BiSolidDislike className="text-xl" />
+          ) : (
+            <BiDislike className="text-xl" />
+          )}
         </button>
         <span>{comment.downVotesBy.length}</span>
       </div>
