@@ -49,7 +49,8 @@ const App = () => {
 
   if (authedUser === null) {
     return (
-      <main className="min-h-screen  font-quicksand">
+      <main className="min-h-screen font-quicksand">
+        <Navigation />
         <Routes>
           <Route
             path="/*"
@@ -57,12 +58,13 @@ const App = () => {
           />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
+        <Footer />
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen  font-quicksand">
+    <main className="min-h-screen font-quicksand">
       <Navigation name={authedUser.user.name} logout={onLogout} />
       <Routes>
         <Route path="/" element={<HomePage />} />
