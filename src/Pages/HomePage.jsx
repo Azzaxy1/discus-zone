@@ -77,11 +77,12 @@ const HomePage = () => {
           <MdOutlineForum className="text-7xl" />
           <div className="max-w-sm md:max-w-md">
             <h1 className="text-lg font-semibold md:text-2xl">
-              Selamat datang di Forum App
+              Selamat datang di DiscusZone
             </h1>
             <p className="text-sm font-thin md:text-base">
-              Forum App merupakan sebuah forum yang dibuat untuk memudahkan para
-              pengguna untuk berdiskusi.
+              DiscusZone merupakan sebuah platform diskusi online yang
+              memungkinkan pengguna untuk berbagi informasi, bertanya, dan
+              berdiskusi mengenai berbagai topik
             </p>
           </div>
         </div>
