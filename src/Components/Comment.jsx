@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-import { showFormattedDate } from "../utils";
+import { showFormattedDate } from "../utils/formattedDate";
 import PropTypes from "prop-types";
 import parser from "html-react-parser";
 import { createComment } from "../utils/network-data";

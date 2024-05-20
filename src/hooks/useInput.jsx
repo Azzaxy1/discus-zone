@@ -7,11 +7,7 @@ function useInput(defaultValue = "") {
     setValue(event.target.value);
   };
 
-  const onInnerHTMLHandler = (event) => {
-    setValue(event.target.innerHTML);
-  };
-
-  return [value, onValueChangeHandler, onInnerHTMLHandler];
+  return [value, onValueChangeHandler];
 }
 
 export default useInput;

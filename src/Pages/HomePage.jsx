@@ -18,6 +18,7 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
+    // TODO : Memisahkan fungsi getAllThreads dan getAllUsers
     const fetchThreadsAndUsers = async () => {
       const threadResponse = await getAllThreads();
       const userResponse = await getAllUsers();

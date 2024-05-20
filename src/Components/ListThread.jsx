@@ -1,7 +1,7 @@
 // import React from "react";
 import { Link } from "react-router-dom";
 import { FaRegComment } from "react-icons/fa";
-import { showFormattedDate } from "../utils";
+import { showFormattedDate } from "../utils/formattedDate";
 import PropTypes from "prop-types";
 import parser from "html-react-parser";
 import VoteThread from "./VoteThread";

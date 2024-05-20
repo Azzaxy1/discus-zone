@@ -1,6 +1,6 @@
 // import React from "react";
 import { BiLike, BiDislike } from "react-icons/bi";
-import { showFormattedDate } from "../utils";
+import { showFormattedDate } from "../utils/formattedDate";
 import { useEffect, useState } from "react";
 import {
   downVoteComment,
@@ -15,6 +15,7 @@ const DetailThread = () => {
   const [thread, setThread] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const { id } = useParams();
+  // const isMounted = useRef(true);
 
   useEffect(() => {
     const fetchDetailThread = async () => {
@@ -33,8 +34,6 @@ const DetailThread = () => {
       thread.detailThread.id,
       commentId
     );
-    console.log(data);
-    console.log(thread);
     if (!error) {
       const updatedComments = thread.detailThread.comments.map((comment) => {
         if (comment.id === commentId) {
@@ -48,7 +47,6 @@ const DetailThread = () => {
         }
         return comment;
       });
-      console.log(updatedComments);
 
       setThread({
         ...thread,
