@@ -62,7 +62,6 @@ const DetailThread = () => {
       thread.detailThread.id,
       commentId
     );
-    console.log(data);
     if (!error) {
       const updatedComments = thread.detailThread.comments.map((comment) => {
         if (comment.id === commentId) {

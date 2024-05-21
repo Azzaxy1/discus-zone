@@ -19,8 +19,6 @@ import { asyncIsLoadingProcess } from "./redux/loading/action";
 const App = () => {
   const authUser = useSelector((states) => states.authUser);
   const isLoading = useSelector((states) => states.isLoading);
-  console.log(authUser);
-  console.log(isLoading);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

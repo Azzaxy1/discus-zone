@@ -30,7 +30,6 @@ async function login({ email, password }) {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
 
   const { status, message } = responseJson;
 
