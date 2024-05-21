@@ -2,97 +2,87 @@
 import { BiLike, BiDislike } from "react-icons/bi";
 import { showFormattedDate } from "../utils/formattedDate";
 import { useEffect, useState } from "react";
-import {
-  downVoteComment,
-  getDetailThread,
-  upVoteComment,
-} from "../utils/network-data";
+
 import { useParams } from "react-router-dom";
 import Comments from "../Components/Comment";
 import parser from "html-react-parser";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncThreadDetail } from "../redux/threadDetail/action";
 
 const DetailThread = () => {
-  const [thread, setThread] = useState([]);
-  const [isLoading, setLoading] = useState(true);
   const { id } = useParams();
-  // const isMounted = useRef(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchDetailThread = async () => {
-      const { error, data } = await getDetailThread(id);
-      if (!error) {
-        setThread(data);
-      }
-      setLoading(false);
-    };
+    dispatch(asyncThreadDetail(id));
+  }, [id, dispatch]);
 
-    fetchDetailThread();
-  }, [id]);
+  const thread = useSelector((state) => state.detailThread);
 
-  const handleUpVoteComment = async (commentId) => {
-    const { error, data } = await upVoteComment(
-      thread.detailThread.id,
-      commentId
-    );
-    if (!error) {
-      const updatedComments = thread.detailThread.comments.map((comment) => {
-        if (comment.id === commentId) {
-          return {
-            ...comment,
-            upVotesBy:
-              data.vote.voteType === 1
-                ? [...comment.upVotesBy, data.vote.userId]
-                : comment.upVotesBy.filter((id) => id !== data.vote.userId),
-          };
-        }
-        return comment;
-      });
+  // const handleUpVoteComment = async (commentId) => {
+  //   const { error, data } = await upVoteComment(
+  //     thread.detailThread.id,
+  //     commentId
+  //   );
+  //   if (!error) {
+  //     const updatedComments = thread.detailThread.comments.map((comment) => {
+  //       if (comment.id === commentId) {
+  //         return {
+  //           ...comment,
+  //           upVotesBy:
+  //             data.vote.voteType === 1
+  //               ? [...comment.upVotesBy, data.vote.userId]
+  //               : comment.upVotesBy.filter((id) => id !== data.vote.userId),
+  //         };
+  //       }
+  //       return comment;
+  //     });
 
-      setThread({
-        ...thread,
-        detailThread: {
-          ...thread.detailThread,
-          comments: updatedComments,
-        },
-      });
-    }
-  };
-  const handleDownVoteComment = async (commentId) => {
-    const { error, data } = await downVoteComment(
-      thread.detailThread.id,
-      commentId
-    );
-    if (!error) {
-      const updatedComments = thread.detailThread.comments.map((comment) => {
-        if (comment.id === commentId) {
-          return {
-            ...comment,
-            downVotesBy:
-              data.vote.voteType === -1
-                ? [...comment.downVotesBy, data.vote.userId]
-                : comment.downVotesBy.filter((id) => id !== data.vote.userId),
-          };
-        }
-        return comment;
-      });
+  //     setThread({
+  //       ...thread,
+  //       detailThread: {
+  //         ...thread.detailThread,
+  //         comments: updatedComments,
+  //       },
+  //     });
+  //   }
+  // };
+  // const handleDownVoteComment = async (commentId) => {
+  //   const { error, data } = await downVoteComment(
+  //     thread.detailThread.id,
+  //     commentId
+  //   );
+  //   if (!error) {
+  //     const updatedComments = thread.detailThread.comments.map((comment) => {
+  //       if (comment.id === commentId) {
+  //         return {
+  //           ...comment,
+  //           downVotesBy:
+  //             data.vote.voteType === -1
+  //               ? [...comment.downVotesBy, data.vote.userId]
+  //               : comment.downVotesBy.filter((id) => id !== data.vote.userId),
+  //         };
+  //       }
+  //       return comment;
+  //     });
 
-      setThread({
-        ...thread,
-        detailThread: {
-          ...thread.detailThread,
-          comments: updatedComments,
-        },
-      });
-    }
-  };
+  //     setThread({
+  //       ...thread,
+  //       detailThread: {
+  //         ...thread.detailThread,
+  //         comments: updatedComments,
+  //       },
+  //     });
+  //   }
+  // };
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Data sedang dimuat...</p>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen">
+  //       <p>Data sedang dimuat...</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <main className="min-h-screen pt-20 md:pt-12 font-quicksand ">
@@ -103,15 +93,15 @@ const DetailThread = () => {
               <article>
                 <header className="flex flex-col w-full gap-2">
                   <span className="px-2 py-1 text-sm border rounded-lg md:text-sm border-secondary w-fit">
-                    #{thread.detailThread.category}
+                    #{thread?.category}
                   </span>
                   <h2 className="text-2xl font-bold md:text-4xl">
-                    {thread.detailThread.title}
+                    {thread?.title}
                   </h2>
                 </header>
                 <div className="flex flex-col gap-3 pt-3">
                   <div className="text-sm font-medium md:text-lg">
-                    {parser(thread.detailThread.body)}
+                    {thread?.body}
                   </div>
                   <footer className="flex flex-row items-center gap-1">
                     <button
@@ -119,28 +109,26 @@ const DetailThread = () => {
                       className="flex flex-row items-center gap-[2px] me-2"
                     >
                       <BiLike className="text-lg md:text-xl" />
-                      <span>{thread.detailThread.upVotesBy.length}</span>
+                      <span>{thread?.upVotesBy.length}</span>
                     </button>
                     <button
                       type="button"
                       className="flex flex-row items-center gap-[2px] me-2"
                     >
                       <BiDislike className="text-lg md:text-xl" />
-                      <span>{thread.detailThread.downVotesBy.length}</span>
+                      <span>{thread?.downVotesBy.length}</span>
                     </button>
                     <div className="flex items-center gap-1 ml-1 text-sm md:text-base">
                       Dibuat oleh
                       <img
-                        src={thread.detailThread.owner.avatar}
-                        alt={thread.detailThread.owner.name}
+                        src={thread?.owner.avatar}
+                        alt={thread?.owner.name}
                         className="w-5 h-5 rounded-full"
                       />
-                      <span className="font-bold">
-                        {thread.detailThread.owner.name}
-                      </span>
+                      <span className="font-bold">{thread?.owner.name}</span>
                     </div>
                     <p className="ml-2 text-sm md:text-base">
-                      {showFormattedDate(thread.detailThread.createdAt)}
+                      {showFormattedDate(thread?.createdAt)}
                     </p>
                   </footer>
                 </div>
@@ -149,9 +137,9 @@ const DetailThread = () => {
           )}
           <article className="py-5">
             <Comments
-              comments={thread.detailThread.comments}
-              onUpVote={handleUpVoteComment}
-              onDownVote={handleDownVoteComment}
+              comments={thread?.comments || []}
+              // onUpVote={handleUpVoteComment}
+              // onDownVote={handleDownVoteComment}
             />
           </article>
         </div>

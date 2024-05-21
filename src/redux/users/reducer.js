@@ -9,4 +9,13 @@ const usersReducer = (users = [], action = {}) => {
   }
 };
 
-export { usersReducer };
+const userLoggedReducer = (userLogged = [], action = {}) => {
+  switch (action.type) {
+    case ActionType.USER_LOGGED:
+      return action.payload.user;
+    default:
+      return userLogged;
+  }
+};
+
+export { usersReducer, userLoggedReducer };

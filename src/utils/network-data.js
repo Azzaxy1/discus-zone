@@ -154,7 +154,7 @@ async function getDetailThread(id) {
   return { error: false, data: responseJson.data };
 }
 
-async function createComment(id, { content }) {
+async function createComment({ id, content }) {
   const response = await fetchWithToken(`${BASE_URL}/threads/${id}/comments`, {
     method: "POST",
     headers: {

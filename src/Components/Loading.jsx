@@ -4,7 +4,7 @@ import LoadingBar from "react-redux-loading-bar";
 
 function Loading() {
   return (
-    <div className="sticky top-0">
+    <div className="sticky top-[70px]">
       {/* @TODO: use react-redux-loading-bar to show loading bar */}
       <LoadingBar />
     </div>

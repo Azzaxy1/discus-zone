@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { showFormattedDate } from "../utils/formattedDate";
 import PropTypes from "prop-types";
 import parser from "html-react-parser";
@@ -7,26 +7,36 @@ import { createComment } from "../utils/network-data";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import VoteComment from "./VoteComment";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  asyncAddComment,
+  asyncThreadDetail,
+} from "../redux/threadDetail/action";
+// import { addCommentActionCreator } from "../redux/threadDetail/action";
 
 const Comments = ({ comments, onUpVote, onDownVote }) => {
-  const [input, setInput] = useState("");
+  const [valueComment, setValueComment] = useState("");
   const { id } = useParams();
+  const dispatch = useDispatch();
+  console.log(comments);
+
+  // const dispatch = useDispatch();
 
   const onCommentHandler = (event) => {
-    setInput(event.target.innerHTML);
+    setValueComment(event.target.innerHTML);
   };
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     try {
-      const { error } = await createComment(id, { content: input });
-      if (error) {
-        throw new Error("Gagal menambahkan komentar");
-      }
-      window.location.reload();
+      // const { error } = await createComment(id, { content: valueComment });
+      // if (error) {
+      //   throw new Error("Gagal menambahkan komentar");
+      // }
+      dispatch(asyncAddComment({ id, content: valueComment }));
       toast.success("Berhasil menambahkan komentar");
-      setInput("");
+      setValueComment("");
     } catch (error) {
       toast.error(error.message);
     }
@@ -41,7 +51,7 @@ const Comments = ({ comments, onUpVote, onDownVote }) => {
             contentEditable
             data-placeholder="Tuliskan deskripsi..."
             className="block w-full h-40 px-2 py-2 border border-gray-500 rounded-md shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-            value={input}
+            value={valueComment}
             onInput={onCommentHandler}
             aria-required="true"
           />
@@ -54,33 +64,35 @@ const Comments = ({ comments, onUpVote, onDownVote }) => {
         </form>
       </article>
       <article>
-        <h3 className="pb-2 text-xl font-bold">Komentar({comments.length})</h3>
-        {comments.map((comment) => (
-          <div
-            key={comment.id}
-            className="flex flex-col gap-2 p-3 mb-2 border rounded-md border-secondary"
-          >
-            <header className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <img
-                  src={comment.owner.avatar}
-                  alt={comment.owner.name}
-                  className="w-5 h-5 rounded-full"
+        <h3 className="pb-2 text-xl font-bold">Komentar({comments?.length})</h3>
+        {comments?.map((comment, i) => {
+          return (
+            <div
+              key={i}
+              className="flex flex-col gap-2 p-3 mb-2 border rounded-md border-secondary"
+            >
+              <header className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <img
+                    src={comment.owner.avatar}
+                    alt={comment.owner.name}
+                    className="w-5 h-5 rounded-full"
+                  />
+                  <span className="font-bold">{comment.owner.name}</span>
+                </div>
+                <span>{showFormattedDate(comment.createdAt)}</span>
+              </header>
+              <div>{parser(comment.content)}</div>
+              <footer className="flex flex-row items-center gap-1">
+                <VoteComment
+                  comment={comment}
+                  // onUpVote={onUpVote}
+                  // onDownVote={onDownVote}
                 />
-                <span className="font-bold">{comment.owner.name}</span>
-              </div>
-              <span>{showFormattedDate(comment.createdAt)}</span>
-            </header>
-            <div>{parser(comment.content)}</div>
-            <footer className="flex flex-row items-center gap-1">
-              <VoteComment
-                comment={comment}
-                onUpVote={onUpVote}
-                onDownVote={onDownVote}
-              />
-            </footer>
-          </div>
-        ))}
+              </footer>
+            </div>
+          );
+        })}
       </article>
     </section>
   );
