@@ -1,23 +1,17 @@
 // import React from "react";
 
-import { useEffect, useState } from "react";
-import { getLeaderboards } from "../utils/network-data";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncLeaderboars } from "../redux/leaderboards/action";
 
 const Leaderboard = () => {
-  const [leaderboards, setLeaderboards] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const leaderboards = useSelector((states) => states.leaderboards);
+  const isLoading = useSelector((states) => states.isLoading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchLeaderboards = async () => {
-      const { error, data } = await getLeaderboards();
-      if (!error) {
-        setLeaderboards(data);
-        setIsLoading(false);
-      }
-    };
-
-    fetchLeaderboards();
-  }, []);
+    dispatch(asyncLeaderboars());
+  }, [dispatch]);
 
   if (isLoading) {
     return (
@@ -38,7 +32,7 @@ const Leaderboard = () => {
             <p className="text-lg font-medium">Pengguna</p>
             <p className="text-lg font-medium">Skor</p>
           </header>
-          {leaderboards.leaderboards.map((leaderboard) => (
+          {leaderboards.map((leaderboard) => (
             <div key={leaderboard.user.id} className="flex justify-between">
               <div className="flex items-center justify-center gap-3">
                 <img

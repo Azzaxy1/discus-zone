@@ -72,6 +72,16 @@ async function getAllUsers() {
   }
 
   return { error: false, data: responseJson.data };
+
+  // if (status !== "success") {
+  //   throw new Error(message);
+  // }
+
+  // const {
+  //   data: { users },
+  // } = responseJson;
+
+  // return users;
 }
 
 async function getUserLogged() {
@@ -122,6 +132,15 @@ async function getAllThreads() {
   }
 
   return { error: false, data: responseJson.data };
+  // if (status !== "success") {
+  //   throw new Error(message);
+  // }
+
+  // const {
+  //   data: { threads },
+  // } = responseJson;
+
+  // return threads;
 }
 
 async function getDetailThread(id) {
@@ -237,11 +256,20 @@ async function getLeaderboards() {
   const response = await fetchWithToken(`${BASE_URL}/leaderboards`);
   const responseJson = await response.json();
 
-  if (responseJson.status !== "success") {
-    return { error: true, data: null };
+  // if (responseJson.status !== "success") {
+  //   return { error: true, data: null };
+  // }
+  const { status, message } = responseJson;
+
+  if (status !== "success") {
+    throw new Error(message);
   }
 
-  return { error: false, data: responseJson.data };
+  const {
+    data: { leaderboards },
+  } = responseJson;
+
+  return leaderboards;
 }
 
 export {

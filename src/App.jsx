@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncLogoutSucess } from "./redux/auth/action";
 import { asyncIsLoadingProcess } from "./redux/loading/action";
+import Loading from "./Components/Loading";
 
 const App = () => {
   const authUser = useSelector((states) => states.authUser);
@@ -40,6 +41,7 @@ const App = () => {
   if (authUser === null) {
     return (
       <>
+        <Loading />
         <main className="min-h-screen font-quicksand">
           <Navigation />
           <Routes>
@@ -54,6 +56,7 @@ const App = () => {
 
   return (
     <>
+      <Loading />
       <main className="min-h-screen font-quicksand">
         <Navigation name={authUser.name} logout={onLogout} />
         <Routes>
