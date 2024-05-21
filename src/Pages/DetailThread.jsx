@@ -1,7 +1,7 @@
 // import React from "react";
 import { BiLike, BiDislike } from "react-icons/bi";
 import { showFormattedDate } from "../utils/formattedDate";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 import Comments from "../Components/Comment";
@@ -101,7 +101,7 @@ const DetailThread = () => {
                 </header>
                 <div className="flex flex-col gap-3 pt-3">
                   <div className="text-sm font-medium md:text-lg">
-                    {thread?.body}
+                    {parser(thread?.body)}
                   </div>
                   <footer className="flex flex-row items-center gap-1">
                     <button

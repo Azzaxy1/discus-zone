@@ -22,8 +22,9 @@ const asyncLeaderboars = () => {
       dispatch(receiveLeaderboardsActionCreator(leaderboards));
     } catch (error) {
       alert(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
-    dispatch(hideLoading());
   };
 };
 

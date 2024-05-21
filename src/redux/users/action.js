@@ -1,5 +1,5 @@
 import { hideLoading, showLoading } from "react-redux-loading-bar";
-import { getAllUsers, getUserLogged, register } from "../../utils/network-data";
+import { getUserLogged, register } from "../../utils/network-data";
 import toast from "react-hot-toast";
 
 const ActionType = {
@@ -25,20 +25,6 @@ const userLoggedActionCreator = (user) => {
   };
 };
 
-const asyncSeeAllUsers = () => {
-  return async (dispatch) => {
-    dispatch(showLoading());
-    try {
-      const users = await getAllUsers();
-      dispatch(receiveUsersActionCreator(users));
-    } catch (error) {
-      toast.error(error.message);
-    }
-
-    dispatch(hideLoading());
-  };
-};
-
 const asyncUserLogged = () => {
   return async (dispatch) => {
     dispatch(showLoading());
@@ -47,9 +33,9 @@ const asyncUserLogged = () => {
       dispatch(userLoggedActionCreator(user));
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
-
-    dispatch(hideLoading());
   };
 };
 
@@ -66,7 +52,6 @@ const asyncRegisterUser = ({ name, email, password }) => {
 export {
   ActionType,
   receiveUsersActionCreator,
-  asyncSeeAllUsers,
   asyncRegisterUser,
   asyncUserLogged,
 };

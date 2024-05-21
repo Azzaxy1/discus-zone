@@ -2,17 +2,16 @@
 
 import { useState } from "react";
 import useInput from "../hooks/useInput";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { asyncAddThread } from "../redux/threads/action";
+import { useNavigate } from "react-router-dom";
 
 const AddThread = () => {
   const [title, onTitleChange] = useInput("");
   const [category, onCategoryChange] = useInput("");
   const [body, setBody] = useState("");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onBodyHandler = (event) => {
     setBody(event.target.innerHTML);
@@ -22,8 +21,6 @@ const AddThread = () => {
     event.preventDefault();
 
     dispatch(asyncAddThread({ title, category, body }));
-
-    toast.success("Thread baru ditambahkan");
     navigate("/");
   };
 

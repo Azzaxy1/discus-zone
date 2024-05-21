@@ -4,44 +4,21 @@ import Category from "../Components/Category";
 import { IoIosAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  downVoteThread,
-  getAllThreads,
-  getAllUsers,
-  upVoteThread,
-} from "../utils/network-data";
+import { downVoteThread, upVoteThread } from "../utils/network-data";
 import ListThread from "../Components/ListThread";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncSeeAllThreads } from "../redux/threads/action";
 
 const HomePage = () => {
-  const [threads, setThreads] = useState([]);
-  const [isLoading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // TODO : Memisahkan fungsi getAllThreads dan getAllUsers
-    const fetchThreadsAndUsers = async () => {
-      const threadResponse = await getAllThreads();
-      const userResponse = await getAllUsers();
+    dispatch(asyncSeeAllThreads());
+  }, [dispatch]);
 
-      if (!threadResponse.error && !userResponse.error) {
-        const users = userResponse.data.users;
-
-        const updatedThreads = threadResponse.data.threads.map((thread) => {
-          const user = users.find((user) => user.id === thread.ownerId);
-          return {
-            ...thread,
-            ownerUsername: user ? user.name : "Unknown",
-            ownerAvatar: user ? user.avatar : "",
-          };
-        });
-
-        setThreads({ threads: updatedThreads });
-      }
-      setLoading(false);
-    };
-
-    fetchThreadsAndUsers();
-  }, []);
+  const threads = useSelector((states) => states.threads);
+  const users = useSelector((states) => states.users);
 
   const handleCategorySelect = (category) => {
     if (category === selectedCategory) {
@@ -60,16 +37,8 @@ const HomePage = () => {
   };
 
   const filteredThreads = selectedCategory
-    ? threads.threads.filter((thread) => thread.category === selectedCategory)
-    : threads.threads;
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Data sedang dimuat...</p>
-      </div>
-    );
-  }
+    ? threads.filter((thread) => thread.category === selectedCategory)
+    : threads;
 
   return (
     <main className="min-h-screen py-24 md:py-20 font-quicksand">
@@ -89,12 +58,13 @@ const HomePage = () => {
         </div>
       </header>
       <Category
-        data={threads.threads}
+        data={threads}
         onCategorySelect={handleCategorySelect}
         selectedCategory={selectedCategory}
       />
       <ListThread
-        data={{ threads: filteredThreads }}
+        filteredThreads={filteredThreads}
+        users={users}
         onUpVote={handleUpVoteThread}
         onDownVote={handleDownVoteThread}
       />

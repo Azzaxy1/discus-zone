@@ -33,8 +33,9 @@ const asyncLoginSucess = ({ email, password }) => {
       dispatch(loginSucessActionCreator(authUser));
     } catch (error) {
       alert(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
-    dispatch(hideLoading());
   };
 };
 

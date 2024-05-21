@@ -6,20 +6,11 @@ import { asyncLeaderboars } from "../redux/leaderboards/action";
 
 const Leaderboard = () => {
   const leaderboards = useSelector((states) => states.leaderboards);
-  const isLoading = useSelector((states) => states.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(asyncLeaderboars());
   }, [dispatch]);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Data sedang dimuat...</p>
-      </div>
-    );
-  }
 
   return (
     <main className="min-h-screen pb-10 md:pt-24 pt-28 font-quicksand">

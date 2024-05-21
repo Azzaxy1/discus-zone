@@ -42,8 +42,8 @@ const asyncAddComment = ({ id, content }) => {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const comment = await createComment({ id, content });
-      dispatch(addCommentActionCreator(comment));
+      const comment = await createComment({ id: id, content: content });
+      dispatch(addCommentActionCreator(comment?.data?.comment));
     } catch (error) {
       alert(error.message);
     } finally {

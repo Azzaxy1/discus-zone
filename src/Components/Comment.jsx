@@ -3,24 +3,16 @@ import React, { useEffect, useState } from "react";
 import { showFormattedDate } from "../utils/formattedDate";
 import PropTypes from "prop-types";
 import parser from "html-react-parser";
-import { createComment } from "../utils/network-data";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import VoteComment from "./VoteComment";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  asyncAddComment,
-  asyncThreadDetail,
-} from "../redux/threadDetail/action";
-// import { addCommentActionCreator } from "../redux/threadDetail/action";
+import { useDispatch } from "react-redux";
+import { asyncAddComment } from "../redux/threadDetail/action";
 
 const Comments = ({ comments, onUpVote, onDownVote }) => {
   const [valueComment, setValueComment] = useState("");
   const { id } = useParams();
   const dispatch = useDispatch();
-  console.log(comments);
-
-  // const dispatch = useDispatch();
 
   const onCommentHandler = (event) => {
     setValueComment(event.target.innerHTML);
@@ -29,17 +21,8 @@ const Comments = ({ comments, onUpVote, onDownVote }) => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
-    try {
-      // const { error } = await createComment(id, { content: valueComment });
-      // if (error) {
-      //   throw new Error("Gagal menambahkan komentar");
-      // }
-      dispatch(asyncAddComment({ id, content: valueComment }));
-      toast.success("Berhasil menambahkan komentar");
-      setValueComment("");
-    } catch (error) {
-      toast.error(error.message);
-    }
+    dispatch(asyncAddComment({ id, content: valueComment }));
+    toast.success("Berhasil menambahkan komentar");
   };
 
   return (
@@ -49,11 +32,9 @@ const Comments = ({ comments, onUpVote, onDownVote }) => {
         <form onSubmit={onSubmitHandler}>
           <div
             contentEditable
-            data-placeholder="Tuliskan deskripsi..."
             className="block w-full h-40 px-2 py-2 border border-gray-500 rounded-md shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
             value={valueComment}
             onInput={onCommentHandler}
-            aria-required="true"
           />
           <button
             type="submit"

@@ -9,9 +9,9 @@ const Category = ({ data, onCategorySelect, selectedCategory }) => {
       <div className="flex flex-col w-full p-5 border-2 rounded-md">
         <h2 className="text-sm md:text-lg">Kategori Populer</h2>
         <div className="flex flex-wrap gap-2 mt-2">
-          {categories.map((category) => (
+          {categories.map((category, i) => (
             <button
-              key={category}
+              key={i}
               onClick={() => onCategorySelect(category)}
               className={`px-2 py-1 text-sm border rounded-lg cursor-pointer md:text-base   border-secondary w-fit ${
                 selectedCategory === category ? "bg-primary text-white" : ""

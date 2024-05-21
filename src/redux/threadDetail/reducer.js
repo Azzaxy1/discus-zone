@@ -7,10 +7,7 @@ const threadDetailReducer = (detailThread = null, action = {}) => {
     case ActionType.ADD_COMMENT:
       return {
         ...detailThread,
-        comments: [
-          action.payload.comment?.data?.comment,
-          ...detailThread.comments,
-        ],
+        comments: [action.payload.comment, ...detailThread.comments],
       };
     default:
       return detailThread;

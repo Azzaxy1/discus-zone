@@ -1,13 +1,16 @@
 import { ActionType } from "./action";
 
-const threadsReducer = (thread = [], action = {}) => {
+const threadsReducer = (threads = [], action = {}) => {
   switch (action.type) {
-    case ActionType.RECEIVE_THREAD:
-      return action.payload.thread;
+    case ActionType.RECEIVE_THREADS:
+      return action.payload.threads;
     case ActionType.ADD_THREAD:
-      return [...thread, action.payload.thread];
+      return {
+        ...threads,
+        threads: [action.payload.thread, ...threads.threads],
+      };
     default:
-      return thread;
+      return threads;
   }
 };
 
