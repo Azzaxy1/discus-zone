@@ -30,13 +30,19 @@ async function login({ email, password }) {
   });
 
   const responseJson = await response.json();
+  console.log(responseJson);
 
-  if (responseJson.status !== "success") {
-    toast.error(responseJson.message);
-    return { error: true, data: null };
+  const { status, message } = responseJson;
+
+  if (status !== "success") {
+    throw new Error(message);
   }
 
-  return { error: false, data: responseJson.data };
+  const {
+    data: { token },
+  } = responseJson;
+
+  return token;
 }
 
 async function register({ name, email, password }) {
@@ -73,11 +79,17 @@ async function getUserLogged() {
   const response = await fetchWithToken(`${BASE_URL}/users/me`);
   const responseJson = await response.json();
 
-  if (responseJson.status !== "success") {
-    return { error: true, data: null };
+  const { status, message } = responseJson;
+
+  if (status !== "success") {
+    throw new Error(message);
   }
 
-  return { error: false, data: responseJson.data };
+  const {
+    data: { user },
+  } = responseJson;
+
+  return user;
 }
 
 async function createThread({ title, category, body }) {

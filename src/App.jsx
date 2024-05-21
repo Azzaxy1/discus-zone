@@ -6,75 +6,68 @@ import HomePage from "./Pages/HomePage";
 import Navigation from "./Components/Navigation";
 import { Footer } from "./Components/Footer";
 import Leaderboard from "./Pages/Leaderboard";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import RegisterPage from "./Pages/RegisterPage";
 import ErrorPage from "./Pages/ErrorPage";
 import DetailThread from "./Pages/DetailThread";
 import AddThread from "./Pages/AddThread";
-import { getUserLogged, putAccessToken } from "./utils/network-data";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncLogoutSucess } from "./redux/auth/action";
+import { asyncIsLoadingProcess } from "./redux/loading/action";
 
 const App = () => {
-  const [authedUser, setAuthedUser] = useState(null);
-  const [initializing, setInitializing] = useState(true);
+  const authUser = useSelector((states) => states.authUser);
+  const isLoading = useSelector((states) => states.isLoading);
+  console.log(authUser);
+  console.log(isLoading);
   const navigate = useNavigate();
-
-  const onLoginSuccess = async ({ token }) => {
-    putAccessToken(token);
-    const { data } = await getUserLogged();
-    setAuthedUser(data);
-  };
+  const dispatch = useDispatch();
 
   const onLogout = () => {
-    setAuthedUser(null);
-    putAccessToken("");
     navigate("/");
+    dispatch(asyncLogoutSucess());
 
     toast.success("Logout success");
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await getUserLogged();
-      setAuthedUser(data);
-      setInitializing(false);
-    };
+    dispatch(asyncIsLoadingProcess());
+  }, [dispatch]);
 
-    fetchUser();
-  }, []);
-
-  if (initializing) {
+  if (isLoading) {
     return null;
   }
 
-  if (authedUser === null) {
+  if (authUser === null) {
     return (
-      <main className="min-h-screen font-quicksand">
-        <Navigation />
-        <Routes>
-          <Route
-            path="/*"
-            element={<LoginPage loginSuccess={onLoginSuccess} />}
-          />
-          <Route path="/register" element={<RegisterPage />} />
-        </Routes>
-        <Footer />
-      </main>
+      <>
+        <main className="min-h-screen font-quicksand">
+          <Navigation />
+          <Routes>
+            <Route path="/*" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Routes>
+          <Footer />
+        </main>
+      </>
     );
   }
 
   return (
-    <main className="min-h-screen font-quicksand">
-      <Navigation name={authedUser.user.name} logout={onLogout} />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path={"/threads/:id"} element={<DetailThread />} />
-        <Route path="/add-thread" element={<AddThread />} />
-        <Route path="/leaderboards" element={<Leaderboard />} />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-      <Footer />
-    </main>
+    <>
+      <main className="min-h-screen font-quicksand">
+        <Navigation name={authUser.name} logout={onLogout} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path={"/threads/:id"} element={<DetailThread />} />
+          <Route path="/add-thread" element={<AddThread />} />
+          <Route path="/leaderboards" element={<Leaderboard />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+        <Footer />
+      </main>
+    </>
   );
 };
 
