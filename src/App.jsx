@@ -11,7 +11,6 @@ import RegisterPage from "./Pages/RegisterPage";
 import ErrorPage from "./Pages/ErrorPage";
 import DetailThread from "./Pages/DetailThread";
 import AddThread from "./Pages/AddThread";
-import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncLogoutSucess } from "./redux/auth/action";
 import { asyncIsLoadingProcess } from "./redux/loading/action";
@@ -24,10 +23,8 @@ const App = () => {
   const dispatch = useDispatch();
 
   const onLogout = () => {
-    navigate("/");
     dispatch(asyncLogoutSucess());
-
-    toast.success("Logout success");
+    navigate("/");
   };
 
   useEffect(() => {

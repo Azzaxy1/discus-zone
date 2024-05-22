@@ -7,7 +7,15 @@ import { useParams } from "react-router-dom";
 import Comments from "../Components/Comment";
 import parser from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
-import { asyncThreadDetail } from "../redux/threadDetail/action";
+import {
+  asyncDownVoteComment,
+  asyncThreadDetail,
+  asyncUpVoteComment,
+} from "../redux/threadDetail/action";
+import {
+  asyncDownVoteThread,
+  asyncUpVoteThread,
+} from "../redux/threads/action";
 
 const DetailThread = () => {
   const { id } = useParams();
@@ -19,70 +27,20 @@ const DetailThread = () => {
 
   const thread = useSelector((state) => state.detailThread);
 
-  // const handleUpVoteComment = async (commentId) => {
-  //   const { error, data } = await upVoteComment(
-  //     thread.detailThread.id,
-  //     commentId
-  //   );
-  //   if (!error) {
-  //     const updatedComments = thread.detailThread.comments.map((comment) => {
-  //       if (comment.id === commentId) {
-  //         return {
-  //           ...comment,
-  //           upVotesBy:
-  //             data.vote.voteType === 1
-  //               ? [...comment.upVotesBy, data.vote.userId]
-  //               : comment.upVotesBy.filter((id) => id !== data.vote.userId),
-  //         };
-  //       }
-  //       return comment;
-  //     });
+  const handleUpVoteThread = () => {
+    dispatch(asyncUpVoteThread(thread.id));
+  };
 
-  //     setThread({
-  //       ...thread,
-  //       detailThread: {
-  //         ...thread.detailThread,
-  //         comments: updatedComments,
-  //       },
-  //     });
-  //   }
-  // };
-  // const handleDownVoteComment = async (commentId) => {
-  //   const { error, data } = await downVoteComment(
-  //     thread.detailThread.id,
-  //     commentId
-  //   );
-  //   if (!error) {
-  //     const updatedComments = thread.detailThread.comments.map((comment) => {
-  //       if (comment.id === commentId) {
-  //         return {
-  //           ...comment,
-  //           downVotesBy:
-  //             data.vote.voteType === -1
-  //               ? [...comment.downVotesBy, data.vote.userId]
-  //               : comment.downVotesBy.filter((id) => id !== data.vote.userId),
-  //         };
-  //       }
-  //       return comment;
-  //     });
+  const handleDownVoteThread = () => {
+    dispatch(asyncDownVoteThread(thread.id));
+  };
 
-  //     setThread({
-  //       ...thread,
-  //       detailThread: {
-  //         ...thread.detailThread,
-  //         comments: updatedComments,
-  //       },
-  //     });
-  //   }
-  // };
-
-  // if (isLoading) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-screen">
-  //       <p>Data sedang dimuat...</p>
-  //     </div>
-  //   );
-  // }
+  const handleUpVoteComment = (commentId) => {
+    dispatch(asyncUpVoteComment(commentId));
+  };
+  const handleDownVoteComment = (commentId) => {
+    dispatch(asyncDownVoteComment(commentId));
+  };
 
   return (
     <main className="min-h-screen pt-20 md:pt-12 font-quicksand ">
@@ -107,6 +65,7 @@ const DetailThread = () => {
                     <button
                       type="button"
                       className="flex flex-row items-center gap-[2px] me-2"
+                      onClick={handleUpVoteThread}
                     >
                       <BiLike className="text-lg md:text-xl" />
                       <span>{thread?.upVotesBy.length}</span>
@@ -114,6 +73,7 @@ const DetailThread = () => {
                     <button
                       type="button"
                       className="flex flex-row items-center gap-[2px] me-2"
+                      onClick={handleDownVoteThread}
                     >
                       <BiDislike className="text-lg md:text-xl" />
                       <span>{thread?.downVotesBy.length}</span>
@@ -138,8 +98,8 @@ const DetailThread = () => {
           <article className="py-5">
             <Comments
               comments={thread?.comments || []}
-              // onUpVote={handleUpVoteComment}
-              // onDownVote={handleDownVoteComment}
+              onUpVote={handleUpVoteComment}
+              onDownVote={handleDownVoteComment}
             />
           </article>
         </div>

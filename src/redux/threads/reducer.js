@@ -5,12 +5,13 @@ const threadsReducer = (threads = [], action = {}) => {
     case ActionType.RECEIVE_THREADS:
       return action.payload.threads;
     case ActionType.ADD_THREAD:
+      console.log(threads);
+      console.log(action.payload.thread);
       return {
         ...threads,
-        threads: [action.payload.thread, ...threads.threads],
+        threads: [action.payload.thread, ...threads],
       };
-    case ActionType.TOGGLE_LIKE_THREAD:
-      console.log(threads);
+    case ActionType.UP_VOTE_THREAD:
       return threads.map((thread) => {
         if (thread.id === action.payload.threadId) {
           return {
@@ -18,6 +19,18 @@ const threadsReducer = (threads = [], action = {}) => {
             upVotesBy: thread.upVotesBy.includes(action.payload.userId)
               ? thread.upVotesBy.filter((id) => id !== action.payload.userId)
               : [...thread.upVotesBy, action.payload.userId],
+          };
+        }
+        return thread;
+      });
+    case ActionType.DOWN_VOTE_THREAD:
+      return threads.map((thread) => {
+        if (thread.id === action.payload.threadId) {
+          return {
+            ...thread,
+            downVotesBy: thread.downVotesBy.includes(action.payload.userId)
+              ? thread.downVotesBy.filter((id) => id !== action.payload.userId)
+              : thread.downVotesBy.concat(action.payload.userId),
           };
         }
         return thread;

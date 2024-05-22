@@ -4,7 +4,6 @@ import { showFormattedDate } from "../utils/formattedDate";
 import PropTypes from "prop-types";
 import parser from "html-react-parser";
 import { useParams } from "react-router-dom";
-import toast from "react-hot-toast";
 import VoteComment from "./VoteComment";
 import { useDispatch } from "react-redux";
 import { asyncAddComment } from "../redux/threadDetail/action";
@@ -22,7 +21,6 @@ const Comments = ({ comments, onUpVote, onDownVote }) => {
     event.preventDefault();
 
     dispatch(asyncAddComment({ id, content: valueComment }));
-    toast.success("Berhasil menambahkan komentar");
   };
 
   return (
@@ -67,8 +65,8 @@ const Comments = ({ comments, onUpVote, onDownVote }) => {
               <footer className="flex flex-row items-center gap-1">
                 <VoteComment
                   comment={comment}
-                  // onUpVote={onUpVote}
-                  // onDownVote={onDownVote}
+                  onUpVote={onUpVote}
+                  onDownVote={onDownVote}
                 />
               </footer>
             </div>

@@ -13,7 +13,8 @@ const FormRegister = ({ register }) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error("Password and Confirm Password must be same");
+      toast.error("Password dan confirm password tidak sama");
+      return;
     } else {
       register({ name, email, password });
     }
@@ -25,7 +26,7 @@ const FormRegister = ({ register }) => {
         Fill the form to register account.
       </h1>
       <input
-        className="px-2 py-3 mb-3 text-black text-base border-none rounded-sm outline-secondary"
+        className="px-2 py-3 mb-3 text-base text-black border-none rounded-sm outline-secondary"
         type="text"
         placeholder="Username"
         value={name}
@@ -58,7 +59,7 @@ const FormRegister = ({ register }) => {
       />
       <button
         type="submit"
-        className="py-2 text-lg  bg-button hover:bg-hoverBtn text-white border-none rounded-lg cursor-pointer"
+        className="py-2 text-lg text-white border-none rounded-lg cursor-pointer bg-button hover:bg-hoverBtn"
       >
         Register
       </button>

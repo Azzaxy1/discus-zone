@@ -1,5 +1,6 @@
 import { hideLoading, showLoading } from "react-redux-loading-bar";
 import { getLeaderboards } from "../../utils/network-data";
+import toast from "react-hot-toast";
 
 const ActionType = {
   RECEIVE_LEADERBOARDS: "RECEIVE_LEADERBOARDS",
@@ -21,7 +22,7 @@ const asyncLeaderboars = () => {
       const leaderboards = await getLeaderboards();
       dispatch(receiveLeaderboardsActionCreator(leaderboards));
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     } finally {
       dispatch(hideLoading());
     }

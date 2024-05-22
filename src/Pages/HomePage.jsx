@@ -4,12 +4,12 @@ import Category from "../Components/Category";
 import { IoIosAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { downVoteThread, upVoteThread } from "../utils/network-data";
 import ListThread from "../Components/ListThread";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  asyncDownVoteThread,
   asyncSeeAllThreads,
-  asyncToggleLikeThread,
+  asyncUpVoteThread,
 } from "../redux/threads/action";
 
 const HomePage = () => {
@@ -32,11 +32,11 @@ const HomePage = () => {
   };
 
   const handleUpVoteThread = async (threadId) => {
-    dispatch(asyncToggleLikeThread(threadId));
+    dispatch(asyncUpVoteThread(threadId));
   };
 
   const handleDownVoteThread = async (threadId) => {
-    await downVoteThread(threadId);
+    dispatch(asyncDownVoteThread(threadId));
   };
 
   const filteredThreads = selectedCategory

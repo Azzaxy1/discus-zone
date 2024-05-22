@@ -1,7 +1,6 @@
 // import React from "react";
 import FormRegister from "../Components/FormRegister";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { asyncRegisterUser } from "../redux/users/action";
 
@@ -13,7 +12,6 @@ const RegisterPage = () => {
     dispatch(asyncRegisterUser({ name, email, password }));
 
     navigate("/");
-    toast.success("Register success, please login");
   };
 
   return (

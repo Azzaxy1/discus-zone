@@ -34,7 +34,7 @@ const asyncLoginSucess = ({ email, password }) => {
       dispatch(loginSucessActionCreator(authUser));
       toast.success("Login success");
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     } finally {
       dispatch(hideLoading());
     }
@@ -45,6 +45,7 @@ const asyncLogoutSucess = () => {
   return (dispatch) => {
     dispatch(logoutSuccessActionCreator());
     putAccessToken("");
+    toast.success("Logout success");
   };
 };
 

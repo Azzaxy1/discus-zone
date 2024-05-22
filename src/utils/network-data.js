@@ -237,9 +237,6 @@ async function getLeaderboards() {
   const response = await fetchWithToken(`${BASE_URL}/leaderboards`);
   const responseJson = await response.json();
 
-  // if (responseJson.status !== "success") {
-  //   return { error: true, data: null };
-  // }
   const { status, message } = responseJson;
 
   if (status !== "success") {

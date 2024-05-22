@@ -7,20 +7,20 @@ const VoteComment = ({ comment, onUpVote, onDownVote }) => {
   const [isUpVoted, setIsUpVoted] = useState(false);
   const [isDownVoted, setIsDownVoted] = useState(false);
 
-  // const handleUpVote = () => {
-  //   onUpVote(comment.id);
-  //   setIsUpVoted((prev) => !prev);
-  // };
+  const handleUpVote = () => {
+    onUpVote(comment.id);
+    setIsUpVoted((prev) => !prev);
+  };
 
-  // const handleDownVote = () => {
-  //   onDownVote(comment.id);
-  //   setIsDownVoted((prev) => !prev);
-  // };
+  const handleDownVote = () => {
+    onDownVote(comment.id);
+    setIsDownVoted((prev) => !prev);
+  };
 
   return (
     <section className="flex">
       <div className="flex flex-row items-center gap-[2px] me-2">
-        <button type="button">
+        <button type="button" onClick={handleUpVote}>
           {isUpVoted ? (
             <BiSolidLike className="text-xl" />
           ) : (
@@ -30,7 +30,7 @@ const VoteComment = ({ comment, onUpVote, onDownVote }) => {
         <span>{comment.upVotesBy.length}</span>
       </div>
       <div className="flex flex-row items-center gap-[2px] me-2">
-        <button type="button">
+        <button type="button" onClick={handleDownVote}>
           {isDownVoted ? (
             <BiSolidDislike className="text-xl" />
           ) : (

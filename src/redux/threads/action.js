@@ -1,6 +1,7 @@
 import { hideLoading, showLoading } from "react-redux-loading-bar";
 import {
   createThread,
+  downVoteThread,
   getAllThreads,
   getAllUsers,
   upVoteThread,
@@ -11,7 +12,8 @@ import toast from "react-hot-toast";
 const ActionType = {
   RECEIVE_THREADS: "RECEIVE_THREADS",
   ADD_THREAD: "ADD_THREAD",
-  TOGGLE_LIKE_THREAD: "TOGGLE_LIKE_THREAD",
+  UP_VOTE_THREAD: "UP_VOTE_THREAD",
+  DOWN_VOTE_THREAD: "DOWN_VOTE_THREAD",
 };
 
 const receiveThreadsActionCreator = (threads) => {
@@ -32,9 +34,19 @@ const addThreadActionCreator = (thread) => {
   };
 };
 
-const toggleLikeThreadActionCreator = ({ threadId, userId }) => {
+const upVoteThreadActionCreator = ({ threadId, userId }) => {
   return {
-    type: ActionType.TOGGLE_LIKE_THREAD,
+    type: ActionType.UP_VOTE_THREAD,
+    payload: {
+      threadId,
+      userId,
+    },
+  };
+};
+
+const downVoteThreadActionCreator = ({ threadId, userId }) => {
+  return {
+    type: ActionType.DOWN_VOTE_THREAD,
     payload: {
       threadId,
       userId,
@@ -53,7 +65,7 @@ const asyncSeeAllThreads = () => {
       dispatch(receiveUsersActionCreator(users.data.users));
       dispatch(receiveThreadsActionCreator(data.threads));
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     } finally {
       dispatch(hideLoading());
     }
@@ -65,8 +77,9 @@ const asyncAddThread = ({ title, body, category }) => {
     dispatch(showLoading());
 
     try {
-      const thread = await createThread({ title, body, category });
-      dispatch(addThreadActionCreator(thread));
+      const data = await createThread({ title, body, category });
+      console.log(data.data.thread);
+      dispatch(addThreadActionCreator(data?.data?.thread));
       toast.success("Thread baru ditambahkan");
     } catch (error) {
       alert(error.message);
@@ -76,20 +89,36 @@ const asyncAddThread = ({ title, body, category }) => {
   };
 };
 
-const asyncToggleLikeThread = (threadId) => {
+const asyncUpVoteThread = (threadId) => {
   return async (dispatch, getState) => {
     dispatch(showLoading());
 
     const { authUser } = getState();
-    dispatch(toggleLikeThreadActionCreator({ threadId, userId: authUser.id }));
+    dispatch(upVoteThreadActionCreator({ threadId, userId: authUser.id }));
 
     try {
       await upVoteThread(threadId);
     } catch (error) {
-      alert(error.message);
-      dispatch(
-        toggleLikeThreadActionCreator({ threadId, userId: authUser.id })
-      );
+      toast.error(error.message);
+      dispatch(upVoteThreadActionCreator({ threadId, userId: authUser.id }));
+    } finally {
+      dispatch(hideLoading());
+    }
+  };
+};
+
+const asyncDownVoteThread = (threadId) => {
+  return async (dispatch, getState) => {
+    dispatch(showLoading());
+
+    const { authUser } = getState();
+    dispatch(downVoteThreadActionCreator({ threadId, userId: authUser.id }));
+
+    try {
+      await downVoteThread(threadId);
+    } catch (error) {
+      toast.error(error.message);
+      dispatch(downVoteThreadActionCreator({ threadId, userId: authUser.id }));
     } finally {
       dispatch(hideLoading());
     }
@@ -101,6 +130,8 @@ export {
   receiveThreadsActionCreator,
   asyncAddThread,
   asyncSeeAllThreads,
-  asyncToggleLikeThread,
-  toggleLikeThreadActionCreator,
+  upVoteThreadActionCreator,
+  downVoteThreadActionCreator,
+  asyncUpVoteThread,
+  asyncDownVoteThread,
 };
