@@ -1,47 +1,46 @@
-// import React from "react";
-import { MdOutlineForum } from "react-icons/md";
-import Category from "../Components/Category";
-import { IoIosAddCircle } from "react-icons/io";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import ListThread from "../Components/ListThread";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react'
+import { MdOutlineForum } from 'react-icons/md'
+import Category from '../Components/Category'
+import { IoIosAddCircle } from 'react-icons/io'
+import { Link } from 'react-router-dom'
+import ListThread from '../Components/ListThread'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   asyncDownVoteThread,
   asyncSeeAllThreads,
-  asyncUpVoteThread,
-} from "../redux/threads/action";
+  asyncUpVoteThread
+} from '../redux/threads/action'
 
 const HomePage = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const dispatch = useDispatch();
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(asyncSeeAllThreads());
-  }, [dispatch]);
+    dispatch(asyncSeeAllThreads())
+  }, [dispatch])
 
-  const threads = useSelector((states) => states.threads);
-  const users = useSelector((states) => states.users);
+  const threads = useSelector((states) => states.threads)
+  const users = useSelector((states) => states.users)
 
   const handleCategorySelect = (category) => {
     if (category === selectedCategory) {
-      setSelectedCategory("");
+      setSelectedCategory('')
     } else {
-      setSelectedCategory(category);
+      setSelectedCategory(category)
     }
-  };
+  }
 
   const handleUpVoteThread = async (threadId) => {
-    dispatch(asyncUpVoteThread(threadId));
-  };
+    dispatch(asyncUpVoteThread(threadId))
+  }
 
   const handleDownVoteThread = async (threadId) => {
-    dispatch(asyncDownVoteThread(threadId));
-  };
+    dispatch(asyncDownVoteThread(threadId))
+  }
 
   const filteredThreads = selectedCategory
     ? threads.filter((thread) => thread.category === selectedCategory)
-    : threads;
+    : threads
 
   return (
     <main className="min-h-screen py-24 md:py-20 font-quicksand">
@@ -77,7 +76,7 @@ const HomePage = () => {
         </Link>
       </aside>
     </main>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

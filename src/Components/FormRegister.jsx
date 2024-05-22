@@ -1,24 +1,23 @@
-// import React from "react";
-import PropTypes from "prop-types";
-import useInput from "../hooks/useInput";
-import { toast } from "react-hot-toast";
+import React from 'react'
+import PropTypes from 'prop-types'
+import useInput from '../hooks/useInput'
+import { toast } from 'react-hot-toast'
 
 const FormRegister = ({ register }) => {
-  const [name, onNameChange] = useInput("");
-  const [email, onEmailChange] = useInput("");
-  const [password, onPasswordChange] = useInput("");
-  const [confirmPassword, onConfirmPasswordChange] = useInput("");
+  const [name, onNameChange] = useInput('')
+  const [email, onEmailChange] = useInput('')
+  const [password, onPasswordChange] = useInput('')
+  const [confirmPassword, onConfirmPasswordChange] = useInput('')
 
   const onSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (password !== confirmPassword) {
-      toast.error("Password dan confirm password tidak sama");
-      return;
+      toast.error('Password dan confirm password tidak sama')
     } else {
-      register({ name, email, password });
+      register({ name, email, password })
     }
-  };
+  }
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col">
@@ -64,11 +63,11 @@ const FormRegister = ({ register }) => {
         Register
       </button>
     </form>
-  );
-};
+  )
+}
 
 FormRegister.propTypes = {
-  register: PropTypes.func.isRequired,
-};
+  register: PropTypes.func.isRequired
+}
 
-export default FormRegister;
+export default FormRegister

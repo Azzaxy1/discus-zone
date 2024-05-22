@@ -1,15 +1,14 @@
-// import React from "react";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { asyncLeaderboars } from "../redux/leaderboards/action";
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { asyncLeaderboars } from '../redux/leaderboards/action'
 
 const Leaderboard = () => {
-  const leaderboards = useSelector((states) => states.leaderboards);
-  const dispatch = useDispatch();
+  const leaderboards = useSelector((states) => states.leaderboards)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(asyncLeaderboars());
-  }, [dispatch]);
+    dispatch(asyncLeaderboars())
+  }, [dispatch])
 
   return (
     <main className="min-h-screen pb-10 md:pt-24 pt-28 font-quicksand">
@@ -38,7 +37,7 @@ const Leaderboard = () => {
         </div>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default Leaderboard;
+export default Leaderboard

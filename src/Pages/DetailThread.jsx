@@ -1,50 +1,48 @@
-// import React from "react";
-import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
-import { showFormattedDate } from "../utils/formattedDate";
-import { useEffect, useState } from "react";
-
-import { useParams } from "react-router-dom";
-import Comments from "../Components/Comment";
-import parser from "html-react-parser";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react'
+import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from 'react-icons/bi'
+import { showFormattedDate } from '../utils/formattedDate'
+import { useParams } from 'react-router-dom'
+import Comments from '../Components/Comment'
+import parser from 'html-react-parser'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   asyncDownVoteComment,
   asyncThreadDetail,
-  asyncUpVoteComment,
-} from "../redux/threadDetail/action";
+  asyncUpVoteComment
+} from '../redux/threadDetail/action'
 import {
   asyncDownVoteThread,
-  asyncUpVoteThread,
-} from "../redux/threads/action";
+  asyncUpVoteThread
+} from '../redux/threads/action'
 
 const DetailThread = () => {
-  const [isUpVoted, setIsUpVoted] = useState(false);
-  const [isDownVoted, setIsDownVoted] = useState(false);
-  const { id } = useParams();
-  const dispatch = useDispatch();
+  const [isUpVoted, setIsUpVoted] = useState(false)
+  const [isDownVoted, setIsDownVoted] = useState(false)
+  const { id } = useParams()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(asyncThreadDetail(id));
-  }, [id, dispatch]);
+    dispatch(asyncThreadDetail(id))
+  }, [id, dispatch])
 
-  const thread = useSelector((state) => state.detailThread);
+  const thread = useSelector((state) => state.detailThread)
 
   const handleUpVoteThread = () => {
-    dispatch(asyncUpVoteThread(thread.id));
-    setIsUpVoted(!isUpVoted);
-  };
+    dispatch(asyncUpVoteThread(thread.id))
+    setIsUpVoted(!isUpVoted)
+  }
 
   const handleDownVoteThread = () => {
-    dispatch(asyncDownVoteThread(thread.id));
-    setIsDownVoted(!isDownVoted);
-  };
+    dispatch(asyncDownVoteThread(thread.id))
+    setIsDownVoted(!isDownVoted)
+  }
 
   const handleUpVoteComment = (commentId) => {
-    dispatch(asyncUpVoteComment(commentId));
-  };
+    dispatch(asyncUpVoteComment(commentId))
+  }
   const handleDownVoteComment = (commentId) => {
-    dispatch(asyncDownVoteComment(commentId));
-  };
+    dispatch(asyncDownVoteComment(commentId))
+  }
 
   return (
     <main className="min-h-screen pt-20 md:pt-12 font-quicksand ">
@@ -71,11 +69,13 @@ const DetailThread = () => {
                       className="flex flex-row items-center gap-[2px] me-2"
                       onClick={handleUpVoteThread}
                     >
-                      {isUpVoted ? (
+                      {isUpVoted
+                        ? (
                         <BiSolidLike className="text-xl" />
-                      ) : (
+                          )
+                        : (
                         <BiLike className="text-xl" />
-                      )}
+                          )}
                       <span>{thread?.upVotesBy.length}</span>
                     </button>
                     <button
@@ -83,11 +83,13 @@ const DetailThread = () => {
                       className="flex flex-row items-center gap-[2px] me-2"
                       onClick={handleDownVoteThread}
                     >
-                      {isDownVoted ? (
+                      {isDownVoted
+                        ? (
                         <BiSolidDislike className="text-xl" />
-                      ) : (
+                          )
+                        : (
                         <BiDislike className="text-xl" />
-                      )}
+                          )}
                       <span>{thread?.downVotesBy.length}</span>
                     </button>
                     <div className="flex items-center gap-1 ml-1 text-sm md:text-base">
@@ -117,7 +119,7 @@ const DetailThread = () => {
         </div>
       </section>
     </main>
-  );
-};
+  )
+}
 
-export default DetailThread;
+export default DetailThread

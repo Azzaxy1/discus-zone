@@ -1,14 +1,14 @@
-import { ActionType } from "./action";
+import { ActionType } from './action'
 
 const authUserReducer = (authUser = null, action = {}) => {
   switch (action.type) {
     case ActionType.LOGIN_SUCCESS:
-      return action.payload.authUser;
+      return action.payload.authUser
     case ActionType.LOGOUT_SUCCESS:
-      return null;
+      return null
     default:
-      return authUser;
+      return authUser
   }
-};
+}
 
-export { authUserReducer };
+export { authUserReducer }

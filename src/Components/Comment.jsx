@@ -1,27 +1,26 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from "react";
-import { showFormattedDate } from "../utils/formattedDate";
-import PropTypes from "prop-types";
-import parser from "html-react-parser";
-import { useParams } from "react-router-dom";
-import VoteComment from "./VoteComment";
-import { useDispatch } from "react-redux";
-import { asyncAddComment } from "../redux/threadDetail/action";
+import React, { useState } from 'react'
+import { showFormattedDate } from '../utils/formattedDate'
+import PropTypes from 'prop-types'
+import parser from 'html-react-parser'
+import { useParams } from 'react-router-dom'
+import VoteComment from './VoteComment'
+import { useDispatch } from 'react-redux'
+import { asyncAddComment } from '../redux/threadDetail/action'
 
 const Comments = ({ comments, onUpVote, onDownVote }) => {
-  const [valueComment, setValueComment] = useState("");
-  const { id } = useParams();
-  const dispatch = useDispatch();
+  const [valueComment, setValueComment] = useState('')
+  const { id } = useParams()
+  const dispatch = useDispatch()
 
   const onCommentHandler = (event) => {
-    setValueComment(event.target.innerHTML);
-  };
+    setValueComment(event.target.innerHTML)
+  }
 
   const onSubmitHandler = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    dispatch(asyncAddComment({ id, content: valueComment }));
-  };
+    dispatch(asyncAddComment({ id, content: valueComment }))
+  }
 
   return (
     <section className="flex flex-col gap-4">
@@ -70,12 +69,12 @@ const Comments = ({ comments, onUpVote, onDownVote }) => {
                 />
               </footer>
             </div>
-          );
+          )
         })}
       </article>
     </section>
-  );
-};
+  )
+}
 
 Comments.propTypes = {
   comments: PropTypes.arrayOf(
@@ -86,14 +85,14 @@ Comments.propTypes = {
       owner: PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        avatar: PropTypes.string.isRequired,
+        avatar: PropTypes.string.isRequired
       }),
       upVotesBy: PropTypes.array.isRequired,
-      downVotesBy: PropTypes.array.isRequired,
+      downVotesBy: PropTypes.array.isRequired
     })
   ).isRequired,
   onUpVote: PropTypes.func,
-  onDownVote: PropTypes.func,
-};
+  onDownVote: PropTypes.func
+}
 
-export default Comments;
+export default Comments

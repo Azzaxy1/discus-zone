@@ -1,47 +1,50 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
-import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from "react-icons/bi";
-import PropTypes from "prop-types";
+import React, { useState } from 'react'
+import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from 'react-icons/bi'
+import PropTypes from 'prop-types'
 
 const VoteComment = ({ comment, onUpVote, onDownVote }) => {
-  const [isUpVoted, setIsUpVoted] = useState(false);
-  const [isDownVoted, setIsDownVoted] = useState(false);
+  const [isUpVoted, setIsUpVoted] = useState(false)
+  const [isDownVoted, setIsDownVoted] = useState(false)
 
   const handleUpVote = () => {
-    onUpVote(comment.id);
-    setIsUpVoted(!isUpVoted);
-  };
+    onUpVote(comment.id)
+    setIsUpVoted(!isUpVoted)
+  }
 
   const handleDownVote = () => {
-    onDownVote(comment.id);
-    setIsDownVoted(!isDownVoted);
-  };
+    onDownVote(comment.id)
+    setIsDownVoted(!isDownVoted)
+  }
 
   return (
     <section className="flex">
       <div className="flex flex-row items-center gap-[2px] me-2">
         <button type="button" onClick={handleUpVote}>
-          {isUpVoted ? (
+          {isUpVoted
+            ? (
             <BiSolidLike className="text-xl" />
-          ) : (
+              )
+            : (
             <BiLike className="text-xl" />
-          )}
+              )}
         </button>
         <span>{comment.upVotesBy.length}</span>
       </div>
       <div className="flex flex-row items-center gap-[2px] me-2">
         <button type="button" onClick={handleDownVote}>
-          {isDownVoted ? (
+          {isDownVoted
+            ? (
             <BiSolidDislike className="text-xl" />
-          ) : (
+              )
+            : (
             <BiDislike className="text-xl" />
-          )}
+              )}
         </button>
         <span>{comment.downVotesBy.length}</span>
       </div>
     </section>
-  );
-};
+  )
+}
 
 VoteComment.propTypes = {
   comment: PropTypes.shape({
@@ -51,13 +54,13 @@ VoteComment.propTypes = {
     owner: PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      avatar: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired
     }),
     upVotesBy: PropTypes.array.isRequired,
-    downVotesBy: PropTypes.array.isRequired,
+    downVotesBy: PropTypes.array.isRequired
   }).isRequired,
   onUpVote: PropTypes.func,
-  onDownVote: PropTypes.func,
-};
+  onDownVote: PropTypes.func
+}
 
-export default VoteComment;
+export default VoteComment

@@ -1,27 +1,27 @@
-// import React from "react";
-import { Link } from "react-router-dom";
-import { FaRegComment } from "react-icons/fa";
-import { showFormattedDate } from "../utils/formattedDate";
-import PropTypes from "prop-types";
-import parser from "html-react-parser";
-import VoteThread from "./VoteThread";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { FaRegComment } from 'react-icons/fa'
+import { showFormattedDate } from '../utils/formattedDate'
+import PropTypes from 'prop-types'
+import parser from 'html-react-parser'
+import VoteThread from './VoteThread'
 
 const ListThread = ({ filteredThreads, onUpVote, onDownVote, users }) => {
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
-      return text.slice(0, maxLength) + "...";
+      return text.slice(0, maxLength) + '...'
     }
-    return text;
-  };
+    return text
+  }
 
   const threads = filteredThreads.map((thread) => {
-    const user = users.find((user) => user.id === thread.ownerId);
+    const user = users.find((user) => user.id === thread.ownerId)
     return {
       ...thread,
-      ownerUsername: user ? user.name : "Unknown",
-      ownerAvatar: user ? user.avatar : "",
-    };
-  });
+      ownerUsername: user ? user.name : 'Unknown',
+      ownerAvatar: user ? user.avatar : ''
+    }
+  })
 
   return (
     <section className="flex md:max-w-[60%] max-w-[90%] m-auto flex-row gap-7">
@@ -57,7 +57,7 @@ const ListThread = ({ filteredThreads, onUpVote, onDownVote, users }) => {
                   </div>
                   <p>{showFormattedDate(thread.createdAt)}</p>
                   <p className="flex items-center gap-1 ml-1 text-sm md:text-base">
-                    Dibuat oleh{" "}
+                    Dibuat oleh{' '}
                     <img
                       src={thread.ownerAvatar}
                       alt={thread.ownerUsername}
@@ -67,13 +67,13 @@ const ListThread = ({ filteredThreads, onUpVote, onDownVote, users }) => {
                   </p>
                 </footer>
               </article>
-            );
+            )
           })}
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 ListThread.propTypes = {
   filteredThreads: PropTypes.arrayOf(
     PropTypes.shape({
@@ -85,12 +85,12 @@ ListThread.propTypes = {
       ownerId: PropTypes.string.isRequired,
       upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
       downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
-      totalComments: PropTypes.number.isRequired,
+      totalComments: PropTypes.number.isRequired
     })
   ).isRequired,
   users: PropTypes.array.isRequired,
   onUpVote: PropTypes.func,
-  onDownVote: PropTypes.func,
-};
+  onDownVote: PropTypes.func
+}
 
-export default ListThread;
+export default ListThread

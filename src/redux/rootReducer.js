@@ -1,11 +1,11 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import { authUserReducer } from "./auth/reducer";
-import isLoadingReducer from "./loading/reducer";
-import { usersReducer } from "./users/reducer";
-import { threadsReducer } from "./threads/reducer";
-import threadDetailReducer from "./threadDetail/reducer";
-import { leaderboardsReducer } from "./leaderboards/reducer";
-import { loadingBarReducer } from "react-redux-loading-bar";
+import { combineReducers } from '@reduxjs/toolkit'
+import { authUserReducer } from './auth/reducer'
+import isLoadingReducer from './loading/reducer'
+import { usersReducer } from './users/reducer'
+import { threadsReducer } from './threads/reducer'
+import threadDetailReducer from './threadDetail/reducer'
+import { leaderboardsReducer } from './leaderboards/reducer'
+import { loadingBarReducer } from 'react-redux-loading-bar'
 
 const rootReducer = combineReducers({
   authUser: authUserReducer,
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   threads: threadsReducer,
   detailThread: threadDetailReducer,
   leaderboards: leaderboardsReducer,
-  loadingBar: loadingBarReducer,
-});
+  loadingBar: loadingBarReducer
+})
 
-export { rootReducer };
+export { rootReducer }

@@ -1,15 +1,15 @@
-// import React from "react";
-import PropTypes from "prop-types";
-import useInput from "../hooks/useInput";
+import React from 'react'
+import PropTypes from 'prop-types'
+import useInput from '../hooks/useInput'
 
 const FormLogin = ({ login }) => {
-  const [email, onEmailChange] = useInput("");
-  const [password, onPasswordChange] = useInput("");
+  const [email, onEmailChange] = useInput('')
+  const [password, onPasswordChange] = useInput('')
 
   const onSubmit = (e) => {
-    e.preventDefault();
-    login({ email, password });
-  };
+    e.preventDefault()
+    login({ email, password })
+  }
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col">
@@ -34,16 +34,16 @@ const FormLogin = ({ login }) => {
       />
       <button
         type="submit"
-        className="py-2 text-lg bg-button hover:bg-hoverBtn text-white border-none rounded-lg cursor-pointer"
+        className="py-2 text-lg text-white border-none rounded-lg cursor-pointer bg-button hover:bg-hoverBtn"
       >
         Login
       </button>
     </form>
-  );
-};
+  )
+}
 
 FormLogin.propTypes = {
-  login: PropTypes.func.isRequired,
-};
+  login: PropTypes.func.isRequired
+}
 
-export default FormLogin;
+export default FormLogin

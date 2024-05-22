@@ -1,32 +1,32 @@
-import { hideLoading, showLoading } from "react-redux-loading-bar";
-import { getLeaderboards } from "../../utils/network-data";
-import toast from "react-hot-toast";
+import { hideLoading, showLoading } from 'react-redux-loading-bar'
+import { getLeaderboards } from '../../utils/network-data'
+import toast from 'react-hot-toast'
 
 const ActionType = {
-  RECEIVE_LEADERBOARDS: "RECEIVE_LEADERBOARDS",
-};
+  RECEIVE_LEADERBOARDS: 'RECEIVE_LEADERBOARDS'
+}
 
 const receiveLeaderboardsActionCreator = (leaderboards) => {
   return {
     type: ActionType.RECEIVE_LEADERBOARDS,
     payload: {
-      leaderboards,
-    },
-  };
-};
+      leaderboards
+    }
+  }
+}
 
 const asyncLeaderboars = () => {
   return async (dispatch) => {
-    dispatch(showLoading());
+    dispatch(showLoading())
     try {
-      const leaderboards = await getLeaderboards();
-      dispatch(receiveLeaderboardsActionCreator(leaderboards));
+      const leaderboards = await getLeaderboards()
+      dispatch(receiveLeaderboardsActionCreator(leaderboards))
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message)
     } finally {
-      dispatch(hideLoading());
+      dispatch(hideLoading())
     }
-  };
-};
+  }
+}
 
-export { ActionType, receiveLeaderboardsActionCreator, asyncLeaderboars };
+export { ActionType, receiveLeaderboardsActionCreator, asyncLeaderboars }

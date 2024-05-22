@@ -1,10 +1,9 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
-import { MdLeaderboard } from "react-icons/md";
-import { RiChatThreadFill } from "react-icons/ri";
-import { BiLogOut } from "react-icons/bi";
+import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { MdLeaderboard } from 'react-icons/md'
+import { RiChatThreadFill } from 'react-icons/ri'
+import { BiLogOut } from 'react-icons/bi'
 
 const Navigation = ({ name, logout }) => {
   return (
@@ -48,12 +47,12 @@ const Navigation = ({ name, logout }) => {
         )}
       </nav>
     </header>
-  );
-};
+  )
+}
 
 Navigation.propTypes = {
   logout: PropTypes.func,
-  name: PropTypes.string,
-};
+  name: PropTypes.string
+}
 
-export default Navigation;
+export default Navigation

@@ -1,8 +1,8 @@
-// import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const Category = ({ data, onCategorySelect, selectedCategory }) => {
-  const categories = [...new Set(data.map((thread) => thread.category))];
+  const categories = [...new Set(data.map((thread) => thread.category))]
 
   return (
     <article className="flex md:max-w-[60%] max-w-[90%] m-auto py-5  flex-row gap-7">
@@ -14,7 +14,7 @@ const Category = ({ data, onCategorySelect, selectedCategory }) => {
               key={i}
               onClick={() => onCategorySelect(category)}
               className={`px-2 py-1 text-sm border rounded-lg cursor-pointer md:text-base   border-secondary w-fit ${
-                selectedCategory === category ? "bg-primary text-white" : ""
+                selectedCategory === category ? 'bg-primary text-white' : ''
               }`}
             >
               #{category}
@@ -23,8 +23,8 @@ const Category = ({ data, onCategorySelect, selectedCategory }) => {
         </div>
       </div>
     </article>
-  );
-};
+  )
+}
 
 Category.propTypes = {
   data: PropTypes.arrayOf(
@@ -37,11 +37,11 @@ Category.propTypes = {
       ownerId: PropTypes.string.isRequired,
       upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
       downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
-      totalComments: PropTypes.number.isRequired,
+      totalComments: PropTypes.number.isRequired
     })
   ).isRequired,
   onCategorySelect: PropTypes.func.isRequired,
-  selectedCategory: PropTypes.string.isRequired,
-};
+  selectedCategory: PropTypes.string.isRequired
+}
 
-export default Category;
+export default Category

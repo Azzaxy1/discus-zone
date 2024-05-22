@@ -1,27 +1,26 @@
-// import React from "react";
-import { useState } from "react";
-import useInput from "../hooks/useInput";
-import { useDispatch } from "react-redux";
-import { asyncAddThread } from "../redux/threads/action";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react'
+import useInput from '../hooks/useInput'
+import { useDispatch } from 'react-redux'
+import { asyncAddThread } from '../redux/threads/action'
+import { useNavigate } from 'react-router-dom'
 
 const AddThread = () => {
-  const [title, onTitleChange] = useInput("");
-  const [category, onCategoryChange] = useInput("");
-  const [body, setBody] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [title, onTitleChange] = useInput('')
+  const [category, onCategoryChange] = useInput('')
+  const [body, setBody] = useState('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const onBodyHandler = (event) => {
-    setBody(event.target.innerHTML);
-  };
+    setBody(event.target.innerHTML)
+  }
 
   const onSubmitHandler = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    dispatch(asyncAddThread({ title, category, body }));
-    navigate("/");
-  };
+    dispatch(asyncAddThread({ title, category, body }))
+    navigate('/')
+  }
 
   return (
     <main className="min-h-screen md:pt-24 pt-28 font-quicksand">
@@ -70,7 +69,7 @@ const AddThread = () => {
         </form>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default AddThread;
+export default AddThread
