@@ -1,5 +1,6 @@
 import { hideLoading, showLoading } from "react-redux-loading-bar";
 import { getUserLogged, login, putAccessToken } from "../../utils/network-data";
+import toast from "react-hot-toast";
 
 const ActionType = {
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
@@ -31,6 +32,7 @@ const asyncLoginSucess = ({ email, password }) => {
 
       const authUser = await getUserLogged();
       dispatch(loginSucessActionCreator(authUser));
+      toast.success("Login success");
     } catch (error) {
       alert(error.message);
     } finally {

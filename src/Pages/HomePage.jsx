@@ -7,7 +7,10 @@ import { useEffect, useState } from "react";
 import { downVoteThread, upVoteThread } from "../utils/network-data";
 import ListThread from "../Components/ListThread";
 import { useDispatch, useSelector } from "react-redux";
-import { asyncSeeAllThreads } from "../redux/threads/action";
+import {
+  asyncSeeAllThreads,
+  asyncToggleLikeThread,
+} from "../redux/threads/action";
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -29,7 +32,7 @@ const HomePage = () => {
   };
 
   const handleUpVoteThread = async (threadId) => {
-    await upVoteThread(threadId);
+    dispatch(asyncToggleLikeThread(threadId));
   };
 
   const handleDownVoteThread = async (threadId) => {

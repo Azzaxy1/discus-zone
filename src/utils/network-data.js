@@ -72,16 +72,6 @@ async function getAllUsers() {
   }
 
   return { error: false, data: responseJson.data };
-
-  // if (status !== "success") {
-  //   throw new Error(message);
-  // }
-
-  // const {
-  //   data: { users },
-  // } = responseJson;
-
-  // return users;
 }
 
 async function getUserLogged() {
@@ -132,15 +122,6 @@ async function getAllThreads() {
   }
 
   return { error: false, data: responseJson.data };
-  // if (status !== "success") {
-  //   throw new Error(message);
-  // }
-
-  // const {
-  //   data: { threads },
-  // } = responseJson;
-
-  // return threads;
 }
 
 async function getDetailThread(id) {

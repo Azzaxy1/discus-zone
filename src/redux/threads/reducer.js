@@ -9,6 +9,19 @@ const threadsReducer = (threads = [], action = {}) => {
         ...threads,
         threads: [action.payload.thread, ...threads.threads],
       };
+    case ActionType.TOGGLE_LIKE_THREAD:
+      console.log(threads);
+      return threads.map((thread) => {
+        if (thread.id === action.payload.threadId) {
+          return {
+            ...thread,
+            upVotesBy: thread.upVotesBy.includes(action.payload.userId)
+              ? thread.upVotesBy.filter((id) => id !== action.payload.userId)
+              : [...thread.upVotesBy, action.payload.userId],
+          };
+        }
+        return thread;
+      });
     default:
       return threads;
   }

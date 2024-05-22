@@ -3,6 +3,7 @@ import {
   createThread,
   getAllThreads,
   getAllUsers,
+  upVoteThread,
 } from "../../utils/network-data";
 import { receiveUsersActionCreator } from "../users/action";
 import toast from "react-hot-toast";
@@ -10,6 +11,7 @@ import toast from "react-hot-toast";
 const ActionType = {
   RECEIVE_THREADS: "RECEIVE_THREADS",
   ADD_THREAD: "ADD_THREAD",
+  TOGGLE_LIKE_THREAD: "TOGGLE_LIKE_THREAD",
 };
 
 const receiveThreadsActionCreator = (threads) => {
@@ -26,6 +28,16 @@ const addThreadActionCreator = (thread) => {
     type: ActionType.ADD_THREAD,
     payload: {
       thread,
+    },
+  };
+};
+
+const toggleLikeThreadActionCreator = ({ threadId, userId }) => {
+  return {
+    type: ActionType.TOGGLE_LIKE_THREAD,
+    payload: {
+      threadId,
+      userId,
     },
   };
 };
@@ -61,7 +73,26 @@ const asyncAddThread = ({ title, body, category }) => {
     } finally {
       dispatch(hideLoading());
     }
-    
+  };
+};
+
+const asyncToggleLikeThread = (threadId) => {
+  return async (dispatch, getState) => {
+    dispatch(showLoading());
+
+    const { authUser } = getState();
+    dispatch(toggleLikeThreadActionCreator({ threadId, userId: authUser.id }));
+
+    try {
+      await upVoteThread(threadId);
+    } catch (error) {
+      alert(error.message);
+      dispatch(
+        toggleLikeThreadActionCreator({ threadId, userId: authUser.id })
+      );
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 };
 
@@ -70,4 +101,6 @@ export {
   receiveThreadsActionCreator,
   asyncAddThread,
   asyncSeeAllThreads,
+  asyncToggleLikeThread,
+  toggleLikeThreadActionCreator,
 };

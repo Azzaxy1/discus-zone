@@ -1,7 +1,6 @@
 // import React from "react";
 import { Link } from "react-router-dom";
 import FormLogin from "../Components/FormLogin";
-import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { asyncLoginSucess } from "../redux/auth/action";
 
@@ -10,8 +9,6 @@ const LoginPage = () => {
 
   const onLoginHandler = ({ email, password }) => {
     dispatch(asyncLoginSucess({ email, password }));
-
-    toast.success("Login success");
   };
 
   return (
