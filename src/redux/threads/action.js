@@ -72,13 +72,12 @@ const asyncSeeAllThreads = () => {
   };
 };
 
-const asyncAddThread = ({ title, body, category }) => {
+const asyncAddThread = ({ title, category, body }) => {
   return async (dispatch) => {
     dispatch(showLoading());
 
     try {
-      const data = await createThread({ title, body, category });
-      console.log(data.data.thread);
+      const data = await createThread({ title, category, body });
       dispatch(addThreadActionCreator(data?.data?.thread));
       toast.success("Thread baru ditambahkan");
     } catch (error) {

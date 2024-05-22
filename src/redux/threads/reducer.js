@@ -5,12 +5,7 @@ const threadsReducer = (threads = [], action = {}) => {
     case ActionType.RECEIVE_THREADS:
       return action.payload.threads;
     case ActionType.ADD_THREAD:
-      console.log(threads);
-      console.log(action.payload.thread);
-      return {
-        ...threads,
-        threads: [action.payload.thread, ...threads],
-      };
+      return [action.payload.thread, ...threads];
     case ActionType.UP_VOTE_THREAD:
       return threads.map((thread) => {
         if (thread.id === action.payload.threadId) {
