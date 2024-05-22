@@ -9,12 +9,12 @@ const VoteComment = ({ comment, onUpVote, onDownVote }) => {
 
   const handleUpVote = () => {
     onUpVote(comment.id);
-    setIsUpVoted((prev) => !prev);
+    setIsUpVoted(!isUpVoted);
   };
 
   const handleDownVote = () => {
     onDownVote(comment.id);
-    setIsDownVoted((prev) => !prev);
+    setIsDownVoted(!isDownVoted);
   };
 
   return (

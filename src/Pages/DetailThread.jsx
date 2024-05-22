@@ -1,7 +1,7 @@
 // import React from "react";
-import { BiLike, BiDislike } from "react-icons/bi";
+import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { showFormattedDate } from "../utils/formattedDate";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 import Comments from "../Components/Comment";
@@ -18,6 +18,8 @@ import {
 } from "../redux/threads/action";
 
 const DetailThread = () => {
+  const [isUpVoted, setIsUpVoted] = useState(false);
+  const [isDownVoted, setIsDownVoted] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -29,10 +31,12 @@ const DetailThread = () => {
 
   const handleUpVoteThread = () => {
     dispatch(asyncUpVoteThread(thread.id));
+    setIsUpVoted(!isUpVoted);
   };
 
   const handleDownVoteThread = () => {
     dispatch(asyncDownVoteThread(thread.id));
+    setIsDownVoted(!isDownVoted);
   };
 
   const handleUpVoteComment = (commentId) => {
@@ -67,7 +71,11 @@ const DetailThread = () => {
                       className="flex flex-row items-center gap-[2px] me-2"
                       onClick={handleUpVoteThread}
                     >
-                      <BiLike className="text-lg md:text-xl" />
+                      {isUpVoted ? (
+                        <BiSolidLike className="text-xl" />
+                      ) : (
+                        <BiLike className="text-xl" />
+                      )}
                       <span>{thread?.upVotesBy.length}</span>
                     </button>
                     <button
@@ -75,7 +83,11 @@ const DetailThread = () => {
                       className="flex flex-row items-center gap-[2px] me-2"
                       onClick={handleDownVoteThread}
                     >
-                      <BiDislike className="text-lg md:text-xl" />
+                      {isDownVoted ? (
+                        <BiSolidDislike className="text-xl" />
+                      ) : (
+                        <BiDislike className="text-xl" />
+                      )}
                       <span>{thread?.downVotesBy.length}</span>
                     </button>
                     <div className="flex items-center gap-1 ml-1 text-sm md:text-base">
