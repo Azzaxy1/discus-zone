@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { asyncLeaderboars } from '../redux/leaderboards/action'
+import LeaderboardItem from '../Components/LeaderboardItem'
 
 const Leaderboard = () => {
   const leaderboards = useSelector((states) => states.leaderboards)
@@ -21,18 +22,8 @@ const Leaderboard = () => {
             <p className="text-lg font-medium">Pengguna</p>
             <p className="text-lg font-medium">Skor</p>
           </header>
-          {leaderboards.map((leaderboard) => (
-            <div key={leaderboard.user.id} className="flex justify-between">
-              <div className="flex items-center justify-center gap-3">
-                <img
-                  src={leaderboard.user.avatar}
-                  alt={leaderboard.user.name}
-                  className="w-10 h-10 rounded-full"
-                />
-                <p className="text-xl">{leaderboard.user.name}</p>
-              </div>
-              <p className="text-xl">{leaderboard.score}</p>
-            </div>
+          {leaderboards.map((leaderboard, i) => (
+          <LeaderboardItem key={i} name={leaderboard.user.name} score={leaderboard.score} avatar={leaderboard.user.avatar}/>
           ))}
         </div>
       </div>
