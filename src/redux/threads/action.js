@@ -2,11 +2,8 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar'
 import {
   createThread,
   downVoteThread,
-  getAllThreads,
-  getAllUsers,
   upVoteThread
 } from '../../utils/network-data'
-import { receiveUsersActionCreator } from '../users/action'
 import toast from 'react-hot-toast'
 
 const ActionType = {
@@ -50,24 +47,6 @@ const downVoteThreadActionCreator = ({ threadId, userId }) => {
     payload: {
       threadId,
       userId
-    }
-  }
-}
-
-const asyncSeeAllThreads = () => {
-  return async (dispatch) => {
-    dispatch(showLoading())
-
-    try {
-      const users = await getAllUsers()
-      const { data } = await getAllThreads()
-
-      dispatch(receiveUsersActionCreator(users.data.users))
-      dispatch(receiveThreadsActionCreator(data.threads))
-    } catch (error) {
-      toast.error(error.message)
-    } finally {
-      dispatch(hideLoading())
     }
   }
 }
@@ -128,7 +107,6 @@ export {
   ActionType,
   receiveThreadsActionCreator,
   asyncAddThread,
-  asyncSeeAllThreads,
   upVoteThreadActionCreator,
   downVoteThreadActionCreator,
   asyncUpVoteThread,

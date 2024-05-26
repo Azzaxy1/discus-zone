@@ -7,9 +7,9 @@ import ListThread from '../Components/ListThread'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   asyncDownVoteThread,
-  asyncSeeAllThreads,
   asyncUpVoteThread
 } from '../redux/threads/action'
+import { asyncSeeAllThreads } from '../redux/shared/action'
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('')
