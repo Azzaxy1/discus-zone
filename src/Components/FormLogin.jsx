@@ -22,7 +22,6 @@ const FormLogin = ({ login }) => {
         placeholder="Email"
         value={email}
         onChange={onEmailChange}
-        required
       />
       <input
         className="px-2 py-3 mb-3 text-base text-black border-none rounded-sm outline-primary"
@@ -30,7 +29,6 @@ const FormLogin = ({ login }) => {
         placeholder="Password"
         value={password}
         onChange={onPasswordChange}
-        required
       />
       <button
         type="submit"

@@ -32,7 +32,6 @@ const asyncLoginSucess = ({ email, password }) => {
 
       const authUser = await getUserLogged()
       dispatch(loginSucessActionCreator(authUser))
-      toast.success('Login success')
     } catch (error) {
       toast.error(error.message)
     } finally {
