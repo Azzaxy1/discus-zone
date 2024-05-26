@@ -4,7 +4,7 @@ import { receiveUsersActionCreator } from '../users/action'
 import { receiveThreadsActionCreator } from '../threads/action'
 import toast from 'react-hot-toast'
 
-const asyncSeeAllThreads = () => {
+const asyncPopulateUsersAndThreads = () => {
   return async (dispatch) => {
     dispatch(showLoading())
 
@@ -22,4 +22,4 @@ const asyncSeeAllThreads = () => {
   }
 }
 
-export { asyncSeeAllThreads }
+export { asyncPopulateUsersAndThreads }

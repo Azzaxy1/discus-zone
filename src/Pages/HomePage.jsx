@@ -9,14 +9,14 @@ import {
   asyncDownVoteThread,
   asyncUpVoteThread
 } from '../redux/threads/action'
-import { asyncSeeAllThreads } from '../redux/shared/action'
+import { asyncPopulateUsersAndThreads } from '../redux/shared/action'
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('')
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(asyncSeeAllThreads())
+    dispatch(asyncPopulateUsersAndThreads())
   }, [dispatch])
 
   const threads = useSelector((states) => states.threads)
