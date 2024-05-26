@@ -14,7 +14,7 @@ const FormLogin = ({ login }) => {
   return (
     <form onSubmit={onSubmit} className="flex flex-col">
       <h1 className="mb-4 text-2xl font-semibold text-lightMode">
-        Login to use app, please.
+        Login to use discusZone, please.
       </h1>
       <input
         className="px-2 py-3 mb-3 text-base text-black border-none rounded-sm outline-primary"
