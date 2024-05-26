@@ -10,10 +10,10 @@ const asyncPopulateUsersAndThreads = () => {
 
     try {
       const users = await getAllUsers()
-      const { data } = await getAllThreads()
+      const threads = await getAllThreads()
 
-      dispatch(receiveUsersActionCreator(users.data.users))
-      dispatch(receiveThreadsActionCreator(data.threads))
+      dispatch(receiveUsersActionCreator(users))
+      dispatch(receiveThreadsActionCreator(threads))
     } catch (error) {
       toast.error(error.message)
     } finally {

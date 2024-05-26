@@ -67,11 +67,16 @@ async function getAllUsers () {
   const response = await fetchWithToken(`${BASE_URL}/users`)
   const responseJson = await response.json()
 
-  if (responseJson.status !== 'success') {
-    return { error: true, data: null }
+  const { status, message } = responseJson
+  if (status !== 'success') {
+    throw new Error(message)
   }
 
-  return { error: false, data: responseJson.data }
+  const {
+    data: { users }
+  } = responseJson
+
+  return users
 }
 
 async function getUserLogged () {
@@ -117,11 +122,16 @@ async function getAllThreads () {
   const response = await fetchWithToken(`${BASE_URL}/threads`)
   const responseJson = await response.json()
 
-  if (responseJson.status !== 'success') {
-    return { error: true, data: null }
+  const { status, message } = responseJson
+  if (status !== 'success') {
+    throw new Error(message)
   }
 
-  return { error: false, data: responseJson.data }
+  const {
+    data: { threads }
+  } = responseJson
+
+  return threads
 }
 
 async function getDetailThread (id) {
