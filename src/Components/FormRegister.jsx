@@ -1,22 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import useInput from '../hooks/useInput'
-import { toast } from 'react-hot-toast'
 
 const FormRegister = ({ register }) => {
   const [name, onNameChange] = useInput('')
   const [email, onEmailChange] = useInput('')
   const [password, onPasswordChange] = useInput('')
-  const [confirmPassword, onConfirmPasswordChange] = useInput('')
 
   const onSubmit = (e) => {
     e.preventDefault()
 
-    if (password !== confirmPassword) {
-      toast.error('Password dan confirm password tidak sama')
-    } else {
-      register({ name, email, password })
-    }
+    register({ name, email, password })
   }
 
   return (
@@ -46,14 +40,6 @@ const FormRegister = ({ register }) => {
         placeholder="Password"
         value={password}
         onChange={onPasswordChange}
-        required
-      />
-      <input
-        className="px-2 py-3 mb-3 text-base text-black border-none rounded-sm outline-secondary"
-        type="password"
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={onConfirmPasswordChange}
         required
       />
       <button

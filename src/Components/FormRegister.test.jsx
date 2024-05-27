@@ -1,29 +1,39 @@
 /**
  * Test scenario
  *
- * - LoginInput Component
+ * - FormRegister Component
+ *   - should handle name typing correctly
  *   - should handle email typing correctly
  *   - should handle password typing correctly
- *   - should call login function when login button is clicked
+ *   - should call register function when register button is clicked
  *
  */
 
 import React from 'react'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import FormLogin from './FormLogin'
 import userEvent from '@testing-library/user-event'
 import matchers from '@testing-library/jest-dom/matchers'
+import FormRegister from './FormRegister'
 
 expect.extend(matchers)
 
-describe('LoginInput Component', () => {
+describe('FormRegister Component', () => {
   afterEach(() => {
     cleanup()
   })
 
+  it('should handle name typing correctly', async () => {
+    render(<FormRegister register={() => {}}/>)
+    const nameInput = await screen.getByPlaceholderText('Username')
+
+    await userEvent.type(nameInput, 'example')
+
+    expect(nameInput).toHaveValue('example')
+  })
+
   it('should handle email typing correctly', async () => {
-    render(<FormLogin login={() => {}}/>)
+    render(<FormRegister register={() => {}}/>)
     const emailInput = await screen.getByPlaceholderText('Email')
 
     await userEvent.type(emailInput, 'example@mail.com')
@@ -32,7 +42,7 @@ describe('LoginInput Component', () => {
   })
 
   it('should handle password typing correctly', async () => {
-    render(<FormLogin login={() => {}}/>)
+    render(<FormRegister register={() => {}}/>)
     const passwordInput = await screen.getByPlaceholderText('Password')
 
     await userEvent.type(passwordInput, 'passwordtest')
@@ -40,18 +50,21 @@ describe('LoginInput Component', () => {
     expect(passwordInput).toHaveValue('passwordtest')
   })
 
-  it('should call login function when login button is clicked', async () => {
-    const mockLogin = vi.fn()
-    render(<FormLogin login={mockLogin} />)
+  it('should call register function when register button is clicked', async () => {
+    const mockRegister = vi.fn()
+    render(<FormRegister register={mockRegister} />)
+    const nameInput = await screen.getByPlaceholderText('Username')
+    await userEvent.type(nameInput, 'example')
     const emailInput = await screen.getByPlaceholderText('Email')
     await userEvent.type(emailInput, 'example@mail.com')
     const passwordInput = await screen.getByPlaceholderText('Password')
     await userEvent.type(passwordInput, 'passwordtest')
-    const loginButton = await screen.getByRole('button', { name: 'Login' })
+    const registerButton = await screen.getByRole('button', { name: 'Register' })
 
-    await userEvent.click(loginButton)
+    await userEvent.click(registerButton)
 
-    expect(mockLogin).toBeCalledWith({
+    expect(mockRegister).toBeCalledWith({
+      name: 'example',
       email: 'example@mail.com',
       password: 'passwordtest'
     })
